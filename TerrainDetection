@@ -1,15 +1,21 @@
 using UnityEngine;
 
-public class PlatformCollision : MonoBehaviour {
+public class TerrainDetection : MonoBehaviour {
 
     public PlayerMovementScript movement;
 
-
+    //public bool canJump = true;
 
     private void OnCollisionEnter2D(Collision2D collisioninfo)
     {
+        if(collisioninfo.collider.tag == "Terrain")
+        {
+            FindObjectOfType<PlayerMovementScript>().canJump = true;
+        }
+
         if(collisioninfo.collider.tag == "Platform")
         {
+            FindObjectOfType<PlayerMovementScript>().canJump = true;
             Debug.Log("You hit a platform.");
         }
 
@@ -17,3 +23,4 @@ public class PlatformCollision : MonoBehaviour {
     }
 
 }
+
