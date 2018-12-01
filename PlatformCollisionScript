@@ -1,0 +1,19 @@
+using UnityEngine;
+
+public class PlatformCollision : MonoBehaviour {
+
+    public PlayerMovementScript movement;
+
+
+
+    private void OnCollisionEnter2D(Collision2D collisioninfo)
+    {
+        if(collisioninfo.collider.tag == "Platform")
+        {
+            Debug.Log("You hit a platform.");
+        }
+
+        //Debug.Log("You hit something!");
+    }
+
+}
