@@ -1,0 +1,76 @@
+
+using UnityEngine;
+
+public class PlayerMovementScript : MonoBehaviour {
+
+    public Transform player;
+
+    public Rigidbody2D playerphysics;
+
+    //This stores the horizontal distance
+    //in the form of a vector to be edited
+    //in the inspector: change the x value
+    public Vector3 horizontaldistance;
+
+    //This stores the vertical distance
+    //in the form of a vector to be edited
+    //in the inspector: change the y value
+    public Vector3 verticalposition;
+
+    //This stores the rotation quaternion.
+    //If left unchanged it should minimize rotation.
+    public Quaternion rotationposition;
+
+    //This float will keep track of the player's
+    //energy. Evergy jump will take 10 energy.
+    public float energy = 100f;
+	
+	// Update is called once per frame
+	void FixedUpdate () {
+
+        //This is where I decide how the player moves
+        //based on what key they press.
+        //We are using Time.deltaTime to make
+        //sure everything is running at a manageable speed.
+
+        //This is to minimize rotation
+        player.rotation = rotationposition;
+
+        //this is left movement
+        if (Input.GetKey("a"))
+        {
+            player.position = player.position - (horizontaldistance * Time.deltaTime);
+        }
+
+        //this is for right movement
+        if (Input.GetKey("d"))
+        {
+            player.position = player.position + (horizontaldistance * Time.deltaTime);
+        }
+
+        //this is specifically for jumping
+        if (Input.GetKey("space"))
+        {
+            //This is to make sure we are not just
+            //constantly decrementing the energy float.
+            if(Input.GetKeyDown("space"))
+            {
+                energy -= 10f;
+            }
+            player.position = player.position + (verticalposition * Time.deltaTime);
+        }
+
+        //this is for up movement
+        if (Input.GetKey("w"))
+        {
+            
+        }
+
+        //this is for down movement
+        if (Input.GetKey("s"))
+        {
+
+        }
+		
+	}
+}
