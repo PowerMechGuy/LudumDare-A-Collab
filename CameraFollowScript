@@ -1,0 +1,26 @@
+using UnityEngine;
+
+public class CameraFollow : MonoBehaviour {
+
+    //This is the camera follow script.
+    //It will be used to make the camera follow
+    //the player.
+
+    public Transform player;
+    public Vector3 offset;
+
+    public float smoothSpeed = 10f;
+
+
+	
+	// Update is called once per frame
+	void FixedUpdate () {
+
+        Vector3 desiredPosition = player.position + offset;
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, (smoothSpeed * Time.deltaTime));
+
+        transform.position = smoothedPosition;
+
+        transform.LookAt(player);
+	}
+}
