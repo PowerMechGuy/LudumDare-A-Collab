@@ -1,4 +1,5 @@
 
+
 using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour {
@@ -21,12 +22,19 @@ public class PlayerMovementScript : MonoBehaviour {
     //If left unchanged it should minimize rotation.
     public Quaternion rotationposition;
 
+    //public Vector3 upwardForce;
+    public float upwardForce = 10f;
+
     //This float will keep track of the player's
     //energy. Evergy jump will take 10 energy.
     public float energy = 100f;
+
+    public bool canJump = true;
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+        
 
         //This is where I decide how the player moves
         //based on what key they press.
@@ -53,11 +61,26 @@ public class PlayerMovementScript : MonoBehaviour {
         {
             //This is to make sure we are not just
             //constantly decrementing the energy float.
-            if(Input.GetKeyDown("space"))
+            if(canJump != false)
             {
-                energy -= 10f;
+                if (Input.GetKeyDown("space"))
+                {
+                    canJump = false;
+                    if(energy == 0)
+                    {
+                        energy = 0;
+                    }
+
+                    else
+                    {
+                        energy -= 10f;
+                    }
+                    playerphysics.AddForce(transform.up * (upwardForce * Time.deltaTime));
+                }
             }
-            player.position = player.position + (verticalposition * Time.deltaTime);
+            
+            //player.position = player.position + (verticalposition * Time.deltaTime);
+            //playerphysics.AddForce(transform.up * upwardForce);
         }
 
         //this is for up movement
