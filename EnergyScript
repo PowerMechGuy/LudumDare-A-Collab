@@ -1,0 +1,24 @@
+using UnityEngine.UI;
+using UnityEngine;
+
+public class Energy : MonoBehaviour {
+
+    public Text energy;
+
+	
+	// Update is called once per frame
+	void Update () {
+
+        if(FindObjectOfType<PlayerMovementScript>().energy == 0 || FindObjectOfType<PlayerMovementScript>().energy < 0)
+        {
+            energy.text = "0";
+        }
+
+        else
+        {
+            energy.text = FindObjectOfType<PlayerMovementScript>().energy.ToString("0");
+        }
+        
+		
+	}
+}
