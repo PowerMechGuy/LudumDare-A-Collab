@@ -1,0 +1,21 @@
+using UnityEngine.SceneManagement;
+using UnityEngine;
+
+public class Return : MonoBehaviour {
+
+    public float delay = 3f;
+
+    public GameObject screen;
+
+    public void Redirect()
+    {
+        screen.SetActive(true);
+        Invoke("nextScene", delay);
+    }
+
+    void nextScene()
+    {
+        SceneManager.LoadScene("WelcomeMenu");
+    }
+
+}
