@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Play : MonoBehaviour {
+
+    public float delay = 3f;
+
+    public GameObject screen;
+
+    public void PlayGame()
+    {
+        screen.SetActive(true);
+        Invoke("nextScene", delay);
+    }
+
+    void nextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+}
