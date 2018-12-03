@@ -1,0 +1,21 @@
+
+using UnityEngine;
+
+public class Quit : MonoBehaviour {
+
+    public float delay = 3f;
+
+    public GameObject screen;
+
+    public void Redirect()
+    {
+        screen.SetActive(true);
+        Invoke("EndGame", delay);
+    }
+
+    void EndGame()
+    {
+        Application.Quit();
+    }
+
+}
