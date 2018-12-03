@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SpriteBucket : MonoBehaviour {
+
+    public Sprite CurrentSprite;
+    public Sprite CurrentJumpSprite;
+    public int level = 0;
+
+    public bool rightleg;
+    public bool leftleg;
+    public bool righteye;
+    public bool lefteye;
+
+    public static SpriteBucket instance;
+
+    private void Awake()
+    {
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void loadSprites(Sprite current, Sprite jump)
+    {
+        CurrentSprite = current;
+        CurrentJumpSprite = jump;
+    }
+
+    public void loadData(int l, bool rl, bool ll, bool re, bool le)
+    {
+        level = l;
+        rightleg = rl;
+        leftleg = ll;
+        righteye = re;
+        lefteye = le;
+    }
+
+    public void ClearData()
+    {
+        CurrentSprite = null;
+        CurrentJumpSprite = null;
+        level = 0;
+        rightleg = false;
+        leftleg = false;
+        righteye = false;
+        lefteye = false;
+    }
+}
