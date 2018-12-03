@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EitherLeg : MonoBehaviour {
+
+    Vector3 Distortion;
+	
+	// Update is called once per frame
+	void FixedUpdate () {
+		if(FindObjectOfType<SpriteBucket>().rightleg && FindObjectOfType<SpriteBucket>().leftleg)
+        {
+            DontDisturb();
+        }
+        else if(FindObjectOfType<SpriteBucket>().rightleg)
+        {
+            Disturb();
+        }
+        else if(FindObjectOfType<SpriteBucket>().leftleg)
+        {
+            Disturb();
+        }
+        else
+        {
+            DontDisturb();
+        }
+	}
+
+    void Disturb()
+    {
+        Distortion = new Vector3(-Random.Range(0f, 15f), /*Random.Range(0f, 2f)*/0f, 0f);
+        FindObjectOfType<PlayerMovementScript>().horizontaldistance = Distortion;
+    }
+
+    void DontDisturb()
+    {
+        FindObjectOfType<PlayerMovementScript>().horizontaldistance.x = FindObjectOfType<PlayerMovementScript>().horizontaldistance.x;
+    }
+}
