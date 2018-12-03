@@ -1,0 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class EndLevel : MonoBehaviour {
+
+    public GameObject EndLevelScreen;
+
+    public float NextLevelDelay;
+
+    public void NextLevel()
+    {
+        FindObjectOfType<BotManager>().ChooseSprite();
+        FindObjectOfType<BotManager>().SpriteCalculator();
+        FindObjectOfType<SpriteBucket>().loadSprites(FindObjectOfType<BotManager>().CurrentSprite, FindObjectOfType<BotManager>().CurrentJumpSprite);
+        Debug.Log("Sprites Loaded");
+        FindObjectOfType<SpriteBucket>().loadData(FindObjectOfType<BotManager>().CurrentLevel, FindObjectOfType<BotManager>().RightLegRemoved, FindObjectOfType<BotManager>().LeftLegRemoved, FindObjectOfType<BotManager>().RightEyeRemoved, FindObjectOfType<BotManager>().LeftEyeRemoved);
+
+        
+
+        if (FindObjectOfType<BotManager>().Level1)
+        {
+            FindObjectOfType<BotManager>().Level1 = false;
+        }
+
+        else if (FindObjectOfType<BotManager>().Level2)
+        {
+            FindObjectOfType<BotManager>().Level2 = false;
+        }
+
+        else if (FindObjectOfType<BotManager>().Level3)
+        {
+            FindObjectOfType<BotManager>().Level3 = false;
+        }
+
+        else if (FindObjectOfType<BotManager>().Level4)
+        {
+            FindObjectOfType<BotManager>().Level4 = false;
+
+            FindObjectOfType<SpriteBucket>().ClearData();
+            Debug.Log("Cleared Data");
+        }
+
+        EndLevelScreen.SetActive(true);
+
+        Invoke("End", NextLevelDelay);
+    }
+
+    public void End()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    
+}
