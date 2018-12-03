@@ -1,0 +1,75 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Pickup : MonoBehaviour {
+
+    public GameObject battery;
+
+    Vector3 move;
+
+    float animationDelay = 0.25f;
+
+    private void Start()
+    {
+        move = new Vector3(0f, .15f, 0f);
+        AnimateA();
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            Action();
+        }
+    }
+    
+    void Action()
+    {
+        FindObjectOfType<AudioManager>().Play("NextLevelCrash");
+        FindObjectOfType<PlayerMovementScript>().energy = 180f;
+        Destroy(battery);
+    }
+
+    void AnimateA()
+    {
+        battery.transform.position += move;
+        Invoke("AnimateB", animationDelay);
+    }
+
+    void AnimateB()
+    {
+        battery.transform.position += move;
+        Invoke("AnimateC", animationDelay);
+    }
+
+    void AnimateC()
+    {
+        battery.transform.position += move;
+        Invoke("AnimateD", animationDelay);
+    }
+
+    void AnimateD()
+    {
+        battery.transform.position += move;
+        Invoke("AnimateE", animationDelay);
+    }
+
+    void AnimateE()
+    {
+        battery.transform.position -= move;
+        Invoke("AnimateF", animationDelay);
+    }
+
+    void AnimateF()
+    {
+        battery.transform.position -= move;
+        Invoke("AnimateG", animationDelay);
+    }
+
+    void AnimateG()
+    {
+        battery.transform.position -= move;
+        Invoke("AnimateA", animationDelay);
+    }
+}
