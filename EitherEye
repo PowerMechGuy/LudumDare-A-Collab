@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Cinemachine;
+
+public class EitherEye : MonoBehaviour {
+
+
+    public CinemachineVirtualCamera VirtualCamera;
+
+	// Use this for initialization
+	void Start () {
+        //VirtualCamera.m_Lens.OrthographicSize = 5.0f;
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        if (FindObjectOfType<SpriteBucket>().righteye && FindObjectOfType<SpriteBucket>().lefteye)
+        {
+            VirtualCamera.m_Lens.OrthographicSize = 4.0f;
+        }
+        
+        else if (FindObjectOfType<SpriteBucket>().righteye)
+        {
+            VirtualCamera.m_Lens.OrthographicSize = 4.0f;
+        }
+
+        else if (FindObjectOfType<SpriteBucket>().lefteye)
+        {
+            VirtualCamera.m_Lens.OrthographicSize = 4.0f;
+        }
+
+        else
+        {
+            VirtualCamera.m_Lens.OrthographicSize = 5.0f;
+        }
+
+
+    }
+}
