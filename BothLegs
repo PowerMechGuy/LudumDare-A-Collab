@@ -1,0 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BothLegs : MonoBehaviour {
+
+	
+	// Update is called once per frame
+	void FixedUpdate () {
+		if(FindObjectOfType<SpriteBucket>().rightleg && FindObjectOfType<SpriteBucket>().leftleg)
+        {
+            FindObjectOfType<PlayerMovementScript>().energyCost = 20;
+
+            FindObjectOfType<PlayerMovementScript>().horizontaldistance.x = 3f;
+        }
+	}
+}
