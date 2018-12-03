@@ -1,26 +1,45 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TerrainDetection : MonoBehaviour {
 
     public PlayerMovementScript movement;
-
+    public bool ShouldDie = false;
     //public bool canJump = true;
 
     private void OnCollisionEnter2D(Collision2D collisioninfo)
     {
         if(collisioninfo.collider.tag == "Terrain")
         {
+            FindObjectOfType<AudioManager>().Play("Land");
             FindObjectOfType<PlayerMovementScript>().canJump = true;
+            FindObjectOfType<PlayerMovementScript>().isjumping = false;
         }
 
         if(collisioninfo.collider.tag == "Platform")
         {
+            FindObjectOfType<AudioManager>().Play("Land");
             FindObjectOfType<PlayerMovementScript>().canJump = true;
+            FindObjectOfType<PlayerMovementScript>().isjumping = false;
             Debug.Log("You hit a platform.");
+        }
+
+        if(collisioninfo.collider.tag == "Gate")
+        {
+            FindObjectOfType<PlayerMovementScript>().horizontaldistance.x = 0f;
+            FindObjectOfType<PlayerMovementScript>().canJump = false;
+            FindObjectOfType<AudioManager>().Play("NextLevelTransition");
+            FindObjectOfType<EndLevel>().NextLevel();
+        }
+
+        if(collisioninfo.collider.tag == "DeathBarrier")
+        {
+            FindObjectOfType<AudioManager>().Play("Death");
+            ShouldDie = true;
         }
 
         //Debug.Log("You hit something!");
     }
 
 }
-
