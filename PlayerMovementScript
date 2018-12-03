@@ -1,5 +1,4 @@
-
-
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour {
@@ -27,56 +26,127 @@ public class PlayerMovementScript : MonoBehaviour {
 
     //This float will keep track of the player's
     //energy. Evergy jump will take 10 energy.
-    public float energy = 100f;
+    public float energy;
 
     public bool canJump = true;
+
+    public bool isjumping = false;
+
+    float horizontalMove = 0f;
+    float Jump = 0f;
+
+    public SpriteRenderer playerSprite;
+
+    public Sprite jumpSprite;
+
+    public Sprite homeSprite;
+
+    public Sprite deadSprite;
+
+    public GameObject EndScreen;
+
+    public float restartDelay = 2f;
+
+    bool death = false;
+
+    public float energyCost = 10f;
+
+    private void Start()
+    {
+        energy = 180f;
+
+        horizontaldistance = new Vector3(6f, 0f, 0f);
+
+        horizontaldistance.x = 6f;
+
+        //Invoke("LevelCheck", 1f);
+
+        //LevelCheck();
+
+        if ((FindObjectOfType<SpriteBucket>().level + 1) == 2 || (FindObjectOfType<SpriteBucket>().level + 1) == 3 || (FindObjectOfType<SpriteBucket>().level + 1) == 4)
+        {
+            SpriteUpdate();
+        }
+
+        else
+        {
+            Debug.Log("Ummmmmm...." + FindObjectOfType<SpriteBucket>().level);
+        }
+
+    }
+
+    void Update()
+    {
+        //Debug.Log("Level is: " + FindObjectOfType<SpriteBucket>().level);
+        horizontalMove = Input.GetAxisRaw("Horizontal");
+        Jump = Input.GetAxisRaw("Jump");
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 
         
+        if(FindObjectOfType<TerrainDetection>().ShouldDie == true)
+        {
+            //FindObjectOfType<AudioManager>().Play("Death");
+            RestartA();
+        }
 
+        
+
+        if (!isjumping && energy != 0)
+        {
+            playerSprite.sprite = homeSprite;
+        }
         //This is where I decide how the player moves
         //based on what key they press.
         //We are using Time.deltaTime to make
         //sure everything is running at a manageable speed.
 
-        //This is to minimize rotation
+        //This is for rotation
         player.rotation = rotationposition;
 
-        //this is left movement
-        if (Input.GetKey("a"))
-        {
-            player.position = player.position - (horizontaldistance * Time.deltaTime);
-        }
 
-        //this is for right movement
-        if (Input.GetKey("d"))
+        //this is horizontal movement
+        if (energy != 0)
         {
-            player.position = player.position + (horizontaldistance * Time.deltaTime);
+            player.position = player.position + horizontalMove * (horizontaldistance * Time.deltaTime);
         }
 
         //this is specifically for jumping
-        if (Input.GetKey("space"))
+        if (Jump == 1)
         {
+            if(energy == 0)
+            {
+                //FindObjectOfType<AudioManager>().Play("Death");
+                playerSprite.sprite = deadSprite;
+                FindObjectOfType<AudioManager>().Play("Death");
+                RestartA();
+            }
             //This is to make sure we are not just
             //constantly decrementing the energy float.
-            if(canJump != false)
-            {
-                if (Input.GetKeyDown("space"))
-                {
-                    canJump = false;
-                    if(energy == 0)
-                    {
-                        energy = 0;
-                    }
+            if(canJump != false && energy != 0)
+            {   
+                canJump = false;
 
-                    else
-                    {
-                        energy -= 10f;
-                    }
-                    playerphysics.AddForce(transform.up * (upwardForce * Time.deltaTime));
+                if(energy == 0)
+                {
+                    energy = 0;
                 }
+
+                else
+                {
+                    energy -= energyCost;
+                }
+                
+                //GetComponent<SpriteRenderer>().sprite = jumpSprite;
+                isjumping = true;
+
+                FindObjectOfType<AudioManager>().Play("Jump");
+                playerSprite.sprite = jumpSprite;
+
+                playerphysics.AddForce(transform.up * (upwardForce * Time.deltaTime));
+
             }
             
             //player.position = player.position + (verticalposition * Time.deltaTime);
@@ -96,4 +166,35 @@ public class PlayerMovementScript : MonoBehaviour {
         }
 		
 	}
+
+    public void RestartA()
+    {
+        EndScreen.SetActive(true);
+        //Debug.Log("Hey");
+        //FindObjectOfType<AudioManager>().Play("Death");
+        Invoke("RestartB", restartDelay);
+    }
+
+    public void RestartB()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void SpriteUpdate()
+    {
+        homeSprite = FindObjectOfType<SpriteBucket>().CurrentSprite;
+        jumpSprite = FindObjectOfType<SpriteBucket>().CurrentJumpSprite;
+    }
+
+    /*public void LevelCheck()
+    {
+        if ((FindObjectOfType<SpriteBucket>().level + 1) == 2 || (FindObjectOfType<SpriteBucket>().level + 1) == 3 || (FindObjectOfType<SpriteBucket>().level + 1) == 4)
+        {
+            SpriteUpdate();
+        }
+
+        else
+        {
+            Debug.Log("Ummmmmm...." + FindObjectOfType<SpriteBucket>().level);
+        }
+    }*/
 }
