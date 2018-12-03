@@ -1,0 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Power : MonoBehaviour {
+
+    public Image BatteryLevel;
+
+    public Sprite Level1;
+    public Sprite Level2;
+    public Sprite Level3;
+    public Sprite Level4;
+    public Sprite Level5;
+    public Sprite Level6;
+    public Sprite Level7;
+
+	
+	// Update is called once per frame
+	void Update () {
+		if(FindObjectOfType<PlayerMovementScript>().energy == 180)
+        {
+            BatteryLevel.sprite = Level1;
+        }
+
+        if (FindObjectOfType<PlayerMovementScript>().energy == 150)
+        {
+            BatteryLevel.sprite = Level2;
+        }
+
+        if (FindObjectOfType<PlayerMovementScript>().energy == 120)
+        {
+            BatteryLevel.sprite = Level3;
+        }
+
+        if (FindObjectOfType<PlayerMovementScript>().energy == 90)
+        {
+            BatteryLevel.sprite = Level4;
+        }
+
+        if (FindObjectOfType<PlayerMovementScript>().energy == 60)
+        {
+            BatteryLevel.sprite = Level5;
+        }
+
+        if (FindObjectOfType<PlayerMovementScript>().energy == 30)
+        {
+            BatteryLevel.sprite = Level6;
+        }
+
+        if (FindObjectOfType<PlayerMovementScript>().energy == 0)
+        {
+            BatteryLevel.sprite = Level7;
+        }
+    }
+}
