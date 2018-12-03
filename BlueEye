@@ -1,0 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BlueEye : MonoBehaviour {
+
+    public GameObject screen;
+	
+	// Update is called once per frame
+	void FixedUpdate () {
+        if(FindObjectOfType<SpriteBucket>().lefteye && FindObjectOfType<SpriteBucket>().righteye)
+        {
+            Disappear();
+        }
+        else if(FindObjectOfType<SpriteBucket>().lefteye)
+        {
+            Appear();
+        }
+	}
+
+    void Appear()
+    {
+        screen.SetActive(true);
+    }
+
+    void Disappear()
+    {
+        screen.SetActive(false);
+    }
+}
